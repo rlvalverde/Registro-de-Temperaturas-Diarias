@@ -1,26 +1,28 @@
-# Definir las ciudades, días de la semana y semanas
-ciudades = ["Santo Domingo", "Baños de Aguan Santa", "Loja"]
-dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-semanas = ["Semana1", "Semana2", "Semana3"]
+def calcular_temperatura_promedio(datos_temperaturas):
+    temperaturas_ciudades = {}
 
-# Crear la matriz 3D inicializada con temperaturas aleatorias
-import random
-matriz_temperaturas = [[[random.randint(20, 30) for _ in dias_semana] for _ in semanas] for _ in ciudades]
+    for ciudad, datos_semanales in datos_temperaturas.items():
+        total_temperaturas = 0
+        cantidad_temperaturas = 0
 
-# Mostrar la matriz inicial
-print("Matriz de temperaturas inicial:")
-for i, ciudad in enumerate(ciudades):
-    for j, semana in enumerate(semanas):
-        print(f"{ciudad} - {semana}: {matriz_temperaturas[i][j]}")
+        for semana in datos_semanales:
+            for temperatura in semana:
+                total_temperaturas += temperatura
+                cantidad_temperaturas += 1
 
-# Calcular el promedio de temperaturas por ciudad y semana
-promedios = {}
-for i, ciudad in enumerate(ciudades):
-    for j, semana in enumerate(semanas):
-        promedio = sum(matriz_temperaturas[i][j]) / len(matriz_temperaturas[i][j])
-        promedios[f"{ciudad} - {semana}"] = promedio
+        temperatura_promedio = total_temperaturas / cantidad_temperaturas
+        temperaturas_ciudades[ciudad] = temperatura_promedio
 
-# Mostrar los promedios de temperaturas por ciudad y semana
-print("\nPromedio de temperaturas por ciudad y semana:")
-for key, value in promedios.items():
-    print(f"{key}: {value:.2f}")
+    return temperaturas_ciudades
+
+
+# Ejemplo de datos de temperaturas por ciudad y semana
+datos_temperaturas = {
+    'Baños de Agua Santa': [[25, 26, 27], [24, 23, 22], [28, 29, 30]],
+    'Latacunga': [[20, 21, 22], [23, 24, 25], [19, 18, 17]]
+}
+
+temperaturas_promedio = calcular_temperatura_promedio(datos_temperaturas)
+
+for ciudad, temperatura_promedio in temperaturas_promedio.items():
+    print(f"La temperatura promedio en {ciudad} es: {temperatura_promedio}")
